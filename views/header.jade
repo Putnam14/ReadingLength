@@ -1,0 +1,44 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+
+    meta(name='description', content='#{description}')
+    //- Favicon
+    link(rel='shortcut icon', href='/img/favicon.ico', type='image/x-icon')
+    link(rel='icon', href='/img/Logo_black.png', type='image/x-icon')
+
+    title Reading Length: #{pageTitle}
+
+    link(rel='stylesheet', href='/css/style.css')
+    //- Bootstrap
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+    //- Fonts (FontAwesome, Lato)
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN", crossorigin="anonymous")
+    link(rel='stylesheet', type='text/css', href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic')
+
+  body
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span Menu
+          a.navbar-brand(href='/') Reading Length
+        .navbar-collapse.collapse#navbar
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/') Home
+            li
+              a(href='/wpm/') WPM Tests
+            li
+              a(href='/about/') About
+            li
+              a(href='https://twitter.com/ReadingLength', target="_blank") #[i.fa.fa-twitter]
+            li
+              a(href='#') #[i.fa.fa-github]
+            //li
+              a(href='/blog/') Blog
+    block content

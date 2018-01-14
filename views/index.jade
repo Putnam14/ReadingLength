@@ -1,0 +1,15 @@
+extends header
+
+block content
+  .row.vrow
+    .col-sm-12.text-center.vcol
+      h1 #{title}
+      h2 How long will it take to read that book?
+      include search
+  hr
+  .row
+    .col-sm-10
+      <a class="twitter-timeline" data-height="1400" data-chrome="noheader nofooter noborders transparent" href="https://twitter.com/ReadingLength">Tweets by ReadingLength</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    .col-sm-2
+      include sidebar
+  include footer

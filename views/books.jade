@@ -1,0 +1,88 @@
+extends header
+
+block content
+  include search
+  .row
+    .col-sm-10
+      .col-sm-6
+        .panel.panel-default
+          .panel-heading
+            a(href="http://www.amazon.com/dp/#{ISBN}?tag=#{ref}", style="color: inherit")
+              h3.panel-title.text-center #{Title}
+          .panel-body
+            .row
+              .col-sm-4.text-center
+                a(href="http://www.amazon.com/dp/#{ISBN}?tag=#{ref}", style="color: inherit")
+                  img.img-thumbnail.img-responsive(src="#{Image}", alt="#{Title} by #{Author}")
+              .col-sm-8
+                p #{Author}
+                p #{ReleaseDate}
+                p Pages: #{Pages} pages
+                p Wordcount: #[span#Wordcount #{Wordcount}] words #[span(class="#{Dot}")]
+                p Accuracy: #{Accuracy} (#{AccuracyDesc})
+          .panel-footer
+            a(href="http://www.amazon.com/dp/#{ISBN}?tag=#{ref}", style="color: inherit")
+              .row.text-center
+                .col-sm-12
+                  p MSRP: #{MSRP} 
+                  p Current price: #{Price} (Amazon)
+                  img.img-responsive.center-block(src="/img/shopnow.png", alt="Shop for #{Title} at Amazon")
+      .col-sm-6
+        .panel.panel-default
+          .panel-body
+            p #{avgEstHr} hours and #{avgEstMin} minutes to read #{Title} on average (#{WPM} WPM).
+            hr
+            .readtime.hidden#results
+              p This should take you at most <ins id="estHr"></ins> hours and <ins id="estMin"></ins> minutes to read!
+              p Read for <ins id="month"></ins> minutes each day and finish within a month!
+              hr
+            p Estimate your speed
+            .input-group
+              input.form-control#WPM(name="WPM", type="number", min="1", placeholder="Enter WPM")
+              span.input-group-btn
+                button.btn.btn-default#calculate(onclick="calculate();") Estimate!
+              -//input.form-control#pagesRead(name="pagesRead", type="number", min="0", max="#{Pages}", placeholder="How many pages have you read?")
+              //button.btn.btn-default#calculate(style="margin:auto", onclick="calculate();") Estimate!
+          .panel-footer
+            p Find #[a(href="/wpm/", target="_blank") your reading speed by taking one of these tests] or by reading this book's description, below.
+      .col-sm-12
+        .panel.panel-default
+          .panel-heading.text-center.small Sponsored Links
+          .panel-body(align="center")
+            div(id="#{adsDiv}") 
+            script(async, src="#{adsSrc}")
+      .col-sm-12 
+        .panel.panel-default
+          .panel-heading.text-center 
+            h4.panel-title Book Description
+          .panel-body
+            form(name="timing")
+              p To calculate your words per minute (WPM) reading speed, click the 'Start reading' button and read the entirety of the book's description below.
+              p When you are done reading, click the 'Stop and calculate' button. The website will then calculate your reading speed and give you your WPM.
+              hr
+              button.btn.btn-default#timing(type="button", onclick="readtime();") Start reading
+              br
+              br
+              p#description #{Description}
+              br
+              button.btn.btn-default#CalcButton(type="button", onclick="readtime();") Stop and calculate
+              hr
+              p.text-center.hidden#CalcWPM You read this over an average of <ins id="WPMResult"></ins> words per minute. Great job!
+      .col-sm-12
+        .panel.panel-default
+          .panel-heading
+            p.panel-title You might also like these books
+          .panel-group
+            .panel-body
+              p #[a(href="/book/isbn-#{Sim1ISBN}") #{Sim1Title}]
+            .panel-body
+              p #[a(href="/book/isbn-#{Sim2ISBN}") #{Sim2Title}]
+            .panel-body
+              p #[a(href="/book/isbn-#{Sim3ISBN}") #{Sim3Title}]
+    .col-sm-2
+      include sidebar
+
+
+
+  include footer
+  script(src="/js/calculate.js")

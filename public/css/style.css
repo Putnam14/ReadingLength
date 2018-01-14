@@ -1,0 +1,47 @@
+body {
+  padding: 50px;
+  font: 14px Lato, "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.dot {
+  display: inline-block;
+  border-radius: 50%;
+  width: 50%;
+  background-color: #EEE;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+}
+.dot-success {
+    background-color: #449D44;
+}
+
+.dot-warning {
+    background-color: #F0AD4E;
+}    
+
+.dot-danger {
+    background-color: #D9534F;
+}
+
+.hidden{
+  display:none;
+}
+
+.vrow {
+  width: 100%;
+  height: 80%;
+  height: 80vh;
+  position: relative;
+}
+
+.vcol {
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}

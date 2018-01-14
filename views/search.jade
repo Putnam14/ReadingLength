@@ -1,0 +1,11 @@
+hr
+form.form-horizontal(action='/book-search' method='post')
+  fieldset
+    .form-group.dcign
+      label.col-md-4.control-label(for='search') Search for any book
+      .col-md-6
+        .input-group
+          input.form-control#search(name='query', placeholder='Book title or ISBN...', type='text')
+          span.input-group-btn
+            button.btn.btn-default(type='submit') Search!
+hr

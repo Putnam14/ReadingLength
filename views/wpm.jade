@@ -1,0 +1,19 @@
+extends header
+
+block content
+    .container
+        include search
+        .row
+            .col-sm-10
+                h2 Use one of our words per minute calculator to estimate your reading speed as best as possible!
+                p Find your reading speed in words per minute using any of the following texts. Try to select the reading level that corresponds to the category of book you will be reading. All text samples are sourced from classic books provided by Project Gutenberg.
+                h3 Easy/Elementary
+                a(href="/wpm/ttopr/") The Tale of Peter Rabbit – Beatrix Potter
+                h3 Moderate/High School
+                a(href="/wpm/tpodg") The Picture of Dorian Gray – Oscar Wilde
+                h3 Very Hard/College Graduate
+                a(href="/wpm/atotc") A Tale of Two Cities – Charles Dickens
+                hr
+            .col-sm-2
+                include sidebar
+    include footer

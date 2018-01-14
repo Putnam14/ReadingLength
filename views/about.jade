@@ -1,0 +1,27 @@
+extends header
+
+block content
+  .container
+    include search
+    .row
+      .col-sm-10
+        h1 About Reading Length
+        p Reading Length started as a summer project by #[a(href="mailto:admin@readinglength.com") Bridger Putnam] in 2015. You can view the source on my Github.
+        p Reading Length has become one of the leading reference sites for finding the length of books, and as such has undergone many improvements and makeovers since 2015. In 2016 the site was transitioned to Wordpress where it remained until January, 2018.
+        p. 
+          The move to Wordpress provided many benefits, most notably the addition of user features. Anyone could import their shelves from Goodreads as a list, or create a list by adding books to it via this site. However, the move to Wordpress also presented 
+          challenges. The database holding book information corrupted in early 2017, requiring the entire site to be backed up. During this backup, improper configuration of files on the server hindered my ability to update the theme or home page. The underlying 
+          code was also a mess, but I did not want to make any changes to it in fear of breaking it again.
+        p.
+          As the site gained popularity, I knew I needed to make some changes. The server kept on crashing and needing to be restarted, and my Twitter and email were flooded with 
+          notifications that the server was down or that wordcounts were inaccurate. After searching for solutions to my problems, I decided to ditch Wordpress and learn Node.js. I rewrote the application in JavaScript, learned how to use a new database format, 
+          and figured out a better way to estimate wordcounts: look at how long their audiobook version is. I implemented these changes, and now the site is in its current state.
+        p.
+          Currently, the accuracy of the wordcount for each book is displayed on the book's page as I want to be as transparent as possible to users. Books where the wordcount is estimated by looking at the audiobook length is listed as 'Estimated'. If the application 
+          cannot find the audiobook version, then it will resort to multiplying the page count by an average words per page number. This is highly inaccurate and akin to looking at how thick a book is on the shelf, and as such I mark these as 'Guess'ed. If I have been 
+          able to find a book's accurate wordcount using other sources on the internet, downloading the eBook and counting the words, or through author input, they will be marked 'Verified'.
+        p.
+          If you know of a book's accurate wordcount and I do not have a verified wordcount, or if your wordcount is different, please get in touch with me.
+      .col-sm-2
+        include sidebar
+  include footer 
