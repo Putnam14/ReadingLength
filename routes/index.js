@@ -34,7 +34,7 @@ router.post('/book-search', function(req, res, next) {
 });
 
 /* GET books page */
-router.get('/book/isbn-:urlISBN(\\d{9}[\\d|X]$)/', function(req, res, next) {
+router.get('/book/isbn-:urlISBN(\\d{9}[\\d|X]$)' + '/', function(req, res, next) {
   var ISBN = req.params['urlISBN'];
   if (ISBN == '404') {
     res.redirect('/404');
