@@ -10,6 +10,7 @@ router.get('/', function(req, res, next) {
       pageTitle: 'Look up how long it will take to read any book in the world',
       title: 'Reading Length',
       description: 'Find out how long it will take you to read any book based on the book\'s wordcount and your reading speed (WPM) using our simple search engine.',
+      ref: config.amazonAPI.associatesTag,
       FeaturedMonth: config.featuredBook.month,
       FeaturedTitle: featured.Title,
       FeaturedImage: featured.Image,
@@ -104,6 +105,7 @@ router.get('/404', function(req, res, next) {
     res.status(404).render('404', {
       pageTitle: '404 Not Found',
       description: 'The page you were looking for was not found',
+      ref: config.amazonAPI.associatesTag,
       FeaturedMonth: config.featuredBook.month,
       FeaturedTitle: featured.Title,
       FeaturedImage: featured.Image,
@@ -120,6 +122,7 @@ router.get('/wpm', function(req, res, next) {
       pageTitle: 'Words Per Minute (WPM) Calculators',
       description: 'Find your reading speed in words per minute using any of the following texts. Try to select the reading level that corresponds to the category of book you will be reading.',
       FeaturedMonth: config.featuredBook.month,
+      ref: config.amazonAPI.associatesTag,
       FeaturedTitle: featured.Title,
       FeaturedImage: featured.Image,
       FeaturedISBN: featured.ISBN,
@@ -134,6 +137,7 @@ router.get('/wpm/ttopr', function(req, res, next) {
     res.render('wpmttopr', {
       pageTitle: 'WPM Calculator for Elementary Text',
       description: '',
+      ref: config.amazonAPI.associatesTag,
       FeaturedMonth: config.featuredBook.month,
       FeaturedTitle: featured.Title,
       FeaturedImage: featured.Image,
@@ -149,6 +153,7 @@ router.get('/wpm/tpodg', function(req, res, next) {
     res.render('wpmtpodg', {
       pageTitle: 'WPM Calculator for High School Text',
       description: '',
+      ref: config.amazonAPI.associatesTag,
       FeaturedMonth: config.featuredBook.month,
       FeaturedTitle: featured.Title,
       FeaturedImage: featured.Image,
@@ -164,6 +169,7 @@ router.get('/wpm/atotc', function(req, res, next) {
     res.render('wpmatotc', {
       pageTitle: 'WPM Calculator for College Text',
       description: '',
+      ref: config.amazonAPI.associatesTag,
       FeaturedMonth: config.featuredBook.month,
       FeaturedTitle: featured.Title,
       FeaturedImage: featured.Image,
@@ -179,6 +185,7 @@ router.get('/about', function(req, res, next) {
     res.render('about', {
       pageTitle: 'About the site',
       description: 'Reading Length is a website where you can find estimates of the word count for any book in the world, and see how long it will take you to read.',
+      ref: config.amazonAPI.associatesTag,
       FeaturedMonth: config.featuredBook.month,
       FeaturedTitle: featured.Title,
       FeaturedImage: featured.Image,
