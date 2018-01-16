@@ -8,8 +8,12 @@ block content
       include search
   hr
   .row
-    .col-sm-10
-      <a class="twitter-timeline" data-height="1400" data-chrome="noheader nofooter noborders transparent" href="https://twitter.com/ReadingLength">Tweets by ReadingLength</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-    .col-sm-2
+    .col-sm-8
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title Twitter feed
+        .panel-body
+          <a class="twitter-timeline" data-height="1000" data-chrome="noheader nofooter noborders transparent" href="https://twitter.com/ReadingLength">Tweets by ReadingLength</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    .col-sm-4
       include sidebar
   include footer

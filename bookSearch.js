@@ -20,9 +20,7 @@ function priceAmazonSearch(ASIN, callback) {
         responseGroup: 'Offers'
     }, function(err, results, response) {
         if (err) {
-            console.log('Error wit the deets');
-            console.log(err[0].Error[0]);
-            throw err;
+            console.log('Error with priceAmazonSearch');
         } else {
             if (results[0].hasOwnProperty('Offers')) {
                 callback(results[0].Offers[0].Offer[0].OfferListing[0].Price[0].FormattedPrice[0]);
@@ -42,8 +40,7 @@ function audibleSearch(ASIN, callback) {
         itemId: ASIN
     }, function(err, results, response) {
         if (err) {
-            throw err;
-            console.log(err);
+            console.log('Error with audibleSearch');
         } else {
             //console.log(results[0].ItemAttributes);
             if (results[0].ItemAttributes[0].hasOwnProperty('RunningTime')) { //Older audio CDs may not have runtime listed (See Harry Potter)
@@ -65,7 +62,6 @@ function firstAmazonSearch(query, callback) {
     }, function(err, results, response) {
         if (err) {
             console.log('Error with Amazon search');
-            console.log(err);
             mdObj.ISBN = '404';
             callback(mdObj);
         } else {
@@ -182,12 +178,10 @@ function insertDB(object, callback) {
     mongoClient.connect(url, function(err, db) {
         if (err) {
             console.log('Error connecting on insertion');
-            throw err;
         }
         db.collection("books").insertOne(object, function(err, res) {
             if (err) {
                 console.log('Insertion error');
-                throw err;
             }
             console.log("Inserted: " + object.ISBN);
             db.close();
@@ -200,7 +194,6 @@ function searchDBQuery(query, callback) { //
     mongoClient.connect(url, function(err, db) {
         if (err) {
             console.log('Error connecting on first query');
-            throw err;
         }
         db.collection("books").find({Query:query.toLowerCase()}).toArray(function(err, result) {
             if (err) throw err;
@@ -218,11 +211,9 @@ function searchDBISBN(ISBN, callback) {
     mongoClient.connect(url, function(err, db) {
         if (err) {
             console.log('Error connecting on ISBN search');
-            throw err;
         }
         db.collection("books").find({ISBN:ISBN}).toArray(function(err, result) {
             if (err) {
-                throw err;
                 console.log('Error searching for ISBN');
             };
             var data = 0;

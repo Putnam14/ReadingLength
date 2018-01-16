@@ -2,7 +2,7 @@
     .panel-heading
         p.panel-title Book of #{FeaturedMonth}
     .panel-body
-        a(href="/book/isbn-#{FeaturedISBN}", style="color: inherit")
+        a(href="/book/isbn-#{FeaturedISBN}/", style="color: inherit")
             img.img-thumbnail.img-responsive(src="#{FeaturedImage}", alt="#{FeaturedTitle}")
             p #{FeaturedTitle}
             p #{FeaturedWordcount} words
