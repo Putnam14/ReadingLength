@@ -40,8 +40,8 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
     res.redirect('/404');
   }
   bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
-    bookSearch.getBook(ISBN, function(results) {
-      if (!results) {
+    bookSearch.getBook(ISBN.toUpperCase(), function(results) { //toUpperCase bc X at the end needs to be capitalized
+      if (results == null) {
         res.redirect('/404');
       } else {
         //res.status(200).send(results); //JSON
@@ -60,6 +60,9 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             default:
               var dot = 'dot dot-danger';
           }
+          var PagesC = results.Pages.toLocaleString();
+          var WordcountC = results.Wordcount.toLocaleString();
+          var fWordcountC = featured.Wordcount.toLocaleString();
           res.render('books', {
             pageTitle: results.Title,
             description: "The average reader will take " + avgEstHr + " hours, " + avgEstMin + " minutes to read " + results.Title + " at a speed of 250 WPM. Estimated " + results.Wordcount + " words in " + results.Pages + " pages. Find out how long it will take you to read it!",
@@ -71,8 +74,8 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             Title: results.Title,
             Author: results.Author,
             MSRP: results.MSRP,
-            Pages: results.Pages.toLocaleString(),
-            Wordcount: results.Wordcount.toLocaleString(),
+            Pages: PagesC,
+            Wordcount: WordcountC,
             Dot: dot,
             Accuracy: results.Accuracy,
             AccuracyDesc: results.AccuracyDesc,
@@ -90,7 +93,7 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             FeaturedTitle: featured.Title,
             FeaturedImage: featured.Image,
             FeaturedISBN: featured.ISBN,
-            FeaturedWordcount: featured.Wordcount.toLocaleString(),
+            FeaturedWordcount: fWordcountC,
             adsDiv: config.responsiveAdId,
             adsSrc: config.responsiveAdSrc
           });

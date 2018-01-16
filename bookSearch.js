@@ -21,6 +21,7 @@ function priceAmazonSearch(ASIN, callback) {
     }, function(err, results, response) {
         if (err) {
             console.log('Error with priceAmazonSearch');
+            callback('Unknown');
         } else {
             if (results[0].hasOwnProperty('Offers')) {
                 callback(results[0].Offers[0].Offer[0].OfferListing[0].Price[0].FormattedPrice[0]);
@@ -41,6 +42,7 @@ function audibleSearch(ASIN, callback) {
     }, function(err, results, response) {
         if (err) {
             console.log('Error with audibleSearch');
+            callback(0);
         } else {
             //console.log(results[0].ItemAttributes);
             if (results[0].ItemAttributes[0].hasOwnProperty('RunningTime')) { //Older audio CDs may not have runtime listed (See Harry Potter)
