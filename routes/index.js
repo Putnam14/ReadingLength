@@ -102,21 +102,6 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
     });
   });
 });
-/* GET 404 page */
-router.get('/404', function(req, res, next) {
-  bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
-    res.status(404).render('404', {
-      pageTitle: '404 Not Found',
-      description: 'The page you were looking for was not found',
-      ref: config.amazonAPI.associatesTag,
-      FeaturedMonth: config.featuredBook.month,
-      FeaturedTitle: featured.Title,
-      FeaturedImage: featured.Image,
-      FeaturedISBN: featured.ISBN,
-      FeaturedWordcount: featured.Wordcount.toLocaleString()
-    });
-  });
-});
 
 /* GET wpm page */
 router.get('/wpm', function(req, res, next) {
@@ -197,5 +182,27 @@ router.get('/about', function(req, res, next) {
     });
   });
 });
+
+/*404 Handling*/
+router.get('/404', function(req, res, next) {
+  bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
+    res.status(404).render('404', {
+      pageTitle: '404 Not Found',
+      description: 'The page you were looking for was not found',
+      ref: config.amazonAPI.associatesTag,
+      FeaturedMonth: config.featuredBook.month,
+      FeaturedTitle: featured.Title,
+      FeaturedImage: featured.Image,
+      FeaturedISBN: featured.ISBN,
+      FeaturedWordcount: featured.Wordcount.toLocaleString()
+    });
+  });
+});
+
+router.get('*', function(req, res, next) {
+  res.status(404).redirect('/404');
+});
+
+
 
 module.exports = router;
