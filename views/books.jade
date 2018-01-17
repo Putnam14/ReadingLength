@@ -4,17 +4,17 @@ block content
   include search
   .row
     .col-sm-10
-      .col-sm-6
+      .col-sm-5
         .panel.panel-default
           .panel-heading
             a(href="http://www.amazon.com/dp/#{ISBN}?tag=#{ref}", style="color: inherit")
               h3.panel-title.text-center #{Title}
           .panel-body
             .row
-              .col-sm-4.text-center
+              .col-sm-5.text-center
                 a(href="http://www.amazon.com/dp/#{ISBN}?tag=#{ref}", style="color: inherit")
                   img.img-thumbnail.img-responsive(src="#{Image}", alt="#{Title} by #{Author}")
-              .col-sm-8
+              .col-sm-7
                 p #{Author}
                 p #{ReleaseDate}
                 p Pages: #{Pages} pages
@@ -27,7 +27,7 @@ block content
                   -//p MSRP: #{MSRP} 
                   -//p Current price: #{Price} (Amazon)
                   img.img-responsive.center-block(src="/img/shopnow.png", alt="Shop for #{Title} at Amazon")
-      .col-sm-6
+      .col-sm-7
         .panel.panel-default
           .panel-body
             p #{avgEstHr} hours and #{avgEstMin} minutes to read #{Title} on average (#{WPM} WPM).
@@ -45,6 +45,8 @@ block content
               -//button.btn.btn-default#calculate(style="margin:auto", onclick="calculate();") Estimate!
           .panel-footer
             p Find #[a(href="/wpm/", target="_blank") your reading speed by taking one of these tests] or by reading this book's description, below.
+        div(align="center")
+          include belowSpeedAd.html
       .col-sm-12
         .panel.panel-default
           .panel-heading.text-center.small Sponsored Links
