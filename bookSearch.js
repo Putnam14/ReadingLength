@@ -214,15 +214,19 @@ function searchDBQuery(query, callback) { //
         if (err) {
             console.log('Error connecting on first query');
         }
-        db.collection("books").find({Query:query.toLowerCase()}).toArray(function(err, result) {
-            if (err) throw err;
-            var ISBN = 0;
-            if (result[0] != null) {
-                ISBN = result[0].ISBN;
-            }
-            db.close();
-            callback(ISBN);
-        });
+        if (query == null) {
+            callback(404);
+        } else {
+            db.collection("books").find({Query:query.toLowerCase()}).toArray(function(err, result) {
+                if (err) throw err;
+                var ISBN = 0;
+                if (result[0] != null) {
+                    ISBN = result[0].ISBN;
+                }
+                db.close();
+                callback(ISBN);
+            });
+        }
     });
 }
 
