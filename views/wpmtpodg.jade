@@ -4,7 +4,7 @@ block content
     .container
         include search
         .row
-            .col-sm-10
+            .col-sm-9
                 a(href="/wpm/") Back to list of WPM calculators
                 a(href="/book/isbn-0486278077/") #[h2 The Picture of Dorian Gray]
                 p Reading level: High school
@@ -45,7 +45,7 @@ block content
                         button.btn.btn-default#CalcButton(type="button", onclick="readtime();") Stop and calculate
                     .panel-footer.hidden#CalcWPM
                         p.text-center You read this over an average of <ins id="WPMResult"></ins> words per minute. Great job!
-            .col-sm-2
+            .col-sm-3
                 include sidebar
     include footer
     script(src="/js/calculate.js")
