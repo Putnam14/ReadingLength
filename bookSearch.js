@@ -264,7 +264,9 @@ module.exports = {
     getBook: function(query, callback) {
         searchDBISBN(query, function(result) {
             if (result != 0) {
-                console.log('DB retrieval:  ' + query + ' (' + result.Title + ')');
+                if (query != config.featuredBook.ISBN) {
+                    console.log('DB retrieval:  ' + query + ' (' + result.Title + ')');
+                }
                 callback(result);
             } else {
                 firstAmazonSearch(query, function(mdObj) {
