@@ -76,14 +76,20 @@ function firstAmazonSearch(query, callback) {
                         mdObj.Title = response[0].Item[0].ItemAttributes[0].Title[0];
                         if(response[0].Item[0].ItemAttributes[0].hasOwnProperty('Author')) {
                             mdObj.Author = response[0].Item[0].ItemAttributes[0].Author[0];
+                        } else {
+                            mdObj.Author = 'Unkown author';
                         }
                         if (response[0].Item[0].ItemAttributes[0].hasOwnProperty('ListPrice')) {
                             if (response[0].Item[0].ItemAttributes[0].ListPrice[0].hasOwnProperty('Amount')) {
                                 mdObj.MSRP = response[0].Item[0].ItemAttributes[0].ListPrice[0].FormattedPrice[0];
                             };
+                        } else {
+                            mdObj.MSRP = 'Unknown MSRP';
                         }
                         if (response[0].Item[0].ItemAttributes[0].hasOwnProperty('NumberOfPages')) {
                             mdObj.Pages = response[0].Item[0].ItemAttributes[0].NumberOfPages[0];
+                        } else {
+                            mdObj.Pages = 'Unknown page count';
                         }
                         if (response[0].Item[0].ItemAttributes[0].hasOwnProperty('PublicationDate')) {
                             mdObj.ReleaseDate = response[0].Item[0].ItemAttributes[0].PublicationDate[0];
@@ -113,9 +119,15 @@ function firstAmazonSearch(query, callback) {
                                 }
                             }
                         };
-                        mdObj.Wordcount = mdObj.Pages*config.wordsPerPage;
-                        mdObj.Accuracy = 'Guess'
-                        mdObj.AccuracyDesc = 'Based on page numbers';
+                        if (mdObj.Pages > 0) {
+                            mdObj.Wordcount = mdObj.Pages*config.wordsPerPage;
+                            mdObj.Accuracy = 'Guess';
+                            mdObj.AccuracyDesc = 'Based on page numbers';
+                        } else {
+                            mdObj.Wordcount = 'Unknown number of';
+                            mdObj.Accuracy = 'Guess';
+                            mdObj.AccuracyDesc = 'No pagecount information available';
+                        }
                         mdObj.Query = query.toLowerCase();
                         mdObj.AudioASIN = 0;
                         mdObj.AudioLength = 0;

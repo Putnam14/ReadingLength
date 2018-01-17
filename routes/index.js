@@ -50,7 +50,7 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
           var estMin = (results.Wordcount / WPM);
           var avgEstHr = Math.floor(estMin / 60);
           var avgEstMin = Math.floor(estMin - (avgEstHr * 60));
-          switch (results.Accuracy) { //Accuracy dot selection. Ugly. Please fix.
+          switch (results.Accuracy) { 
             case 'Verified':
               var dot = 'dot dot-success';
               break;
@@ -60,7 +60,11 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             default:
               var dot = 'dot dot-danger';
           }
-          var PagesC = results.Pages.toLocaleString();
+          if (results.Pages > 0) {
+            var PagesC = results.Pages.toLocaleString();
+          } else {
+            var PagesC = 'Unknown page count';
+          }
           var WordcountC = results.Wordcount.toLocaleString();
           var fWordcountC = featured.Wordcount.toLocaleString();
           res.render('books', {
