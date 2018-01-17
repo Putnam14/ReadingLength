@@ -74,11 +74,11 @@ block content
             p.panel-title You might also like these books
           .panel-group
             .panel-body
-              p #[a(href="/book/isbn-#{Sim1ISBN}/") #{Sim1Title}]
+              p #[a(href="/book/isbn-#{Sim1ISBN}/") #{Sim1Title}] (#[a(href="http://www.amazon.com/dp/#{Sim1ISBN}?tag=#{ref}") Look on Amazon])
             .panel-body
-              p #[a(href="/book/isbn-#{Sim2ISBN}/") #{Sim2Title}]
+              p #[a(href="/book/isbn-#{Sim2ISBN}/") #{Sim2Title}] (#[a(href="http://www.amazon.com/dp/#{Sim2ISBN}?tag=#{ref}") Look on Amazon])
             .panel-body
-              p #[a(href="/book/isbn-#{Sim3ISBN}/") #{Sim3Title}]
+              p #[a(href="/book/isbn-#{Sim3ISBN}/") #{Sim3Title}] (#[a(href="http://www.amazon.com/dp/#{Sim2ISBN}?tag=#{ref}") Look on Amazon])
     .col-sm-2
       include sidebar
 

@@ -69,9 +69,14 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
           if (results.Wordcount > 0) {
             var WordcountC = results.Wordcount.toLocaleString();
           } else {
-            var WordcountC = 'Unknown number of'
+            var WordcountC = 'Unknown number of';
           }
           var fWordcountC = featured.Wordcount.toLocaleString();
+          if (results.Description != null) {
+            var Description = results.Description.replace(/<(?:.|\n)*?>/gm, '');
+          } else {
+            var Description = 'Sorry, no description found.';
+          }
           res.render('books', {
             pageTitle: results.Title,
             description: "The average reader will take " + avgEstHr + " hours, " + avgEstMin + " minutes to read " + results.Title + " at a speed of 250 WPM. Estimated " + results.Wordcount + " words in " + results.Pages + " pages. Find out how long it will take you to read it!",
@@ -96,7 +101,7 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             Sim3ISBN: results.Sim3ISBN,
             Sim3Title: results.Sim3Title,
             Image: results.Image,
-            Description: results.Description.replace(/<(?:.|\n)*?>/gm, ''),
+            Description: Description,
             //Price: price,
             FeaturedMonth: config.featuredBook.month,
             FeaturedTitle: featured.Title,
