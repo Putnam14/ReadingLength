@@ -35,7 +35,6 @@ function priceAmazonSearch(ASIN, callback) {
 
 //Audible Length
 function audibleSearch(ASIN, callback) {
-    console.log('Looking up Audiobook:  ' + ASIN);
     client.itemLookup({
         idType: 'ASIN',
         itemId: ASIN
@@ -202,7 +201,6 @@ function insertDB(object, callback) {
             if (err) {
                 console.log('Insertion error');
             }
-            console.log("Inserted: " + object.ISBN);
             db.close();
             callback(true);
         });
