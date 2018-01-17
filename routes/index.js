@@ -65,7 +65,11 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
           } else {
             var PagesC = 'Unknown page count';
           }
-          var WordcountC = results.Wordcount.toLocaleString();
+          if (results.Wordcount > 0) {
+            var WordcountC = results.Wordcount.toLocaleString();
+          } else {
+            var WordcountC = 'Unknown number of'
+          }
           var fWordcountC = featured.Wordcount.toLocaleString();
           res.render('books', {
             pageTitle: results.Title,
