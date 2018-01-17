@@ -267,7 +267,6 @@ module.exports = {
                 console.log('DB retrieval:  ' + query + ' (' + result.Title + ')');
                 callback(result);
             } else {
-                console.log('Not in DB:  ' + query);
                 firstAmazonSearch(query, function(mdObj) {
                     console.log('Searched Amazon for: ' + query + ' (' + mdObj.Title + ')');
                     callback(mdObj);
