@@ -29,7 +29,7 @@ function priceAmazonSearch(ASIN, callback) {
                 console.log('No price');
                 callback('Unknown');
             }   
-        };
+        }
     });
 }
 
@@ -49,13 +49,13 @@ function audibleSearch(ASIN, callback) {
             } else {
                 callback(0);
             }
-        };
+        }
     });
 }
 
 //Amazon Product Advertising API
 function firstAmazonSearch(query, callback) {
-    var mdObj = new Object();
+  var mdObj = {};
     client.itemSearch({
     keywords: query,
     searchIndex: 'Books',
@@ -69,7 +69,7 @@ function firstAmazonSearch(query, callback) {
             if (response[0].Item[0].ItemAttributes[0].hasOwnProperty('ISBN')) {
                 mdObj.ISBN = response[0].Item[0].ItemAttributes[0].ISBN[0];//Check to see if ISBN exists already
                 searchDBISBN(mdObj.ISBN, function(result) {
-                    if (result != 0) {
+                    if (result !== 0) {
                         callback(mdObj);
                     } else {
                         mdObj.Title = response[0].Item[0].ItemAttributes[0].Title[0];
@@ -81,7 +81,7 @@ function firstAmazonSearch(query, callback) {
                         if (response[0].Item[0].ItemAttributes[0].hasOwnProperty('ListPrice')) {
                             if (response[0].Item[0].ItemAttributes[0].ListPrice[0].hasOwnProperty('Amount')) {
                                 mdObj.MSRP = response[0].Item[0].ItemAttributes[0].ListPrice[0].FormattedPrice[0];
-                            };
+                            }
                         } else {
                             mdObj.MSRP = 'Unknown MSRP';
                         }
@@ -100,25 +100,25 @@ function firstAmazonSearch(query, callback) {
                             mdObj.Image = response[0].Item[0].LargeImage[0].URL[0];
                         }
                         if (response[0].Item[0].hasOwnProperty('SimilarProducts')) {
-                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0] != null) {
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0] !== null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0].hasOwnProperty('ASIN')) {
                                     mdObj.Sim1ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].ASIN[0];
                                     mdObj.Sim1Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].Title[0];
                                 }
                             }
-                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1] != null) {
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1] !== null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1].hasOwnProperty('ASIN')) {
                                     mdObj.Sim2ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].ASIN[0];
                                     mdObj.Sim2Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].Title[0];
                                 }
                             }
-                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2] != null) {
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2] !== null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2].hasOwnProperty('ASIN')) {
                                     mdObj.Sim3ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].ASIN[0];
                                     mdObj.Sim3Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].Title[0];
                                 }
                             }
-                        };
+                        }
                         if (mdObj.Pages > 0) {
                             mdObj.Wordcount = mdObj.Pages*config.wordsPerPage;
                             mdObj.Accuracy = 'Guess';
@@ -133,19 +133,19 @@ function firstAmazonSearch(query, callback) {
                         mdObj.AudioLength = 0;
                         if (response[0].Item[0].hasOwnProperty('AlternateVersions')) {
                             if (response[0].Item[0].AlternateVersions[0].hasOwnProperty('AlternateVersion')) {
-                                for (x in response[0].Item[0].AlternateVersions[0].AlternateVersion) {
-                                    if (mdObj.AudioASIN == 0) {
+                                for (var x in response[0].Item[0].AlternateVersions[0].AlternateVersion) {
+                                    if (mdObj.AudioASIN === 0) {
                                         if (response[0].Item[0].AlternateVersions[0].AlternateVersion[x].hasOwnProperty('Binding')) {
                                             if (response[0].Item[0].AlternateVersions[0].AlternateVersion[x].Binding[0] == "Audible Audio Edition") { 
                                                 mdObj.AudioASIN = response[0].Item[0].AlternateVersions[0].AlternateVersion[x].ASIN[0];
                                                 break;
-                                            };
-                                        };
-                                    };
-                                };
-                            };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        if (mdObj.AudioASIN != 0) {
+                        if (mdObj.AudioASIN !== 0) {
                             audibleSearch(mdObj.AudioASIN, function(result) {
                                 mdObj.AudioLength = result;
                                 var audio = parseInt(mdObj.AudioLength);
@@ -171,14 +171,14 @@ function firstAmazonSearch(query, callback) {
                             insertDB(mdObj, function(result) {
                                 if (result) callback(mdObj);
                             });
-                        };
+                        }
                     }
                 });
             } else {
                 mdObj.ISBN = 0;
                 callback(mdObj);
-            };
-        };
+            }
+        }
     });
 }
 
@@ -217,9 +217,9 @@ function searchDBQuery(query, callback) { //
         db.collection("books").find({Query:query.toLowerCase()}).toArray(function(err, result) {
             if (err) throw err;
             var ISBN = 0;
-            if (result[0] != undefined) {
-                var ISBN = result[0].ISBN;
-            };
+            if (result[0] !== undefined) {
+                ISBN = result[0].ISBN;
+            }
             db.close();
             callback(ISBN);
         });
@@ -234,11 +234,11 @@ function searchDBISBN(ISBN, callback) {
         db.collection("books").find({ISBN:ISBN}).toArray(function(err, result) {
             if (err) {
                 console.log('Error searching for ISBN');
-            };
+            }
             var data = 0;
-            if (result[0] != undefined) {
+            if (result[0] !== undefined) {
                 data = result[0];
-            };
+            }
             db.close();
             callback(data);
         });
@@ -247,9 +247,9 @@ function searchDBISBN(ISBN, callback) {
 
 module.exports = {
     search: function(query, callback) {
-        let ISBN = 0;
+        var ISBN = 0;
         searchDBQuery(query, function(result) {
-            if (result != 0) {
+            if (result !== 0) {
                 ISBN = result;
                 console.log('Query found in DB: ' + query + ' (' + ISBN + ')');
                 callback(ISBN);
@@ -265,7 +265,7 @@ module.exports = {
 
     getBook: function(query, callback) {
         searchDBISBN(query, function(result) {
-            if (result != 0) {
+            if (result !== 0) {
                 if (query != config.featuredBook.ISBN) {
                     console.log('DB retrieval:  ' + query + ' (' + result.Title + ')');
                 }
@@ -285,4 +285,4 @@ module.exports = {
         });
     }
 
-}
+};

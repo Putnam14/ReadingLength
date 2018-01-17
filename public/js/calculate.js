@@ -19,12 +19,11 @@ function calculate() {
 }
 
 function readtime() {
-    var b = '';
-    var t0 = '';
+    var b, t0 = '';
     if (($("#timing").html() == "Start reading") || ($("#timing").html() == "Test again")){
-      $("#timing").html("Timing...");
       b = new Date();
       T0 = b.getTime();
+      $("#timing").html("Timing...");
      } 
      else if ($("#timing").html() == "Timing..."){
       $("#timing").html("Test again");
@@ -37,7 +36,6 @@ function readtime() {
       description = description.replace(/\s+/g," ");
       description = description.trim();
       var words = description.split(" ").length;
-      console.log(words);
       var WPM = Math.round(words/minutes);
       $("#WPMResult").html(WPM);
       $("#CalcWPM").removeClass('hidden');

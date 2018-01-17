@@ -25,24 +25,24 @@ router.post('/book-search', function(req, res, next) {
   var searchQuery = req.sanitize(req.body.query);
   bookSearch.search(searchQuery, function(results) {
     //res.send(results);
-    if (results == 0) {
+    if (results === 0) {
       res.status(404).redirect('/404');
     } else {
       res.redirect('/book/isbn-' + results + '/');
-    };
+    }
   });
 });
 
 router.get('/book/isbn-404', function(req, res, next) { //Bad design decisions
   res.status(404).redirect('/404');
-})
+});
 
 /* GET books page (\\d{9}[\\d|X]$)*/
 router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
   var ISBN = req.params['urlISBN'];
   bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
     bookSearch.getBook(ISBN.toUpperCase(), function(results) { //toUpperCase bc X at the end needs to be capitalized
-      if (results == null) {
+      if (results === null) {
         res.redirect('/404');
       } else {
         //res.status(200).send(results); //JSON
@@ -51,31 +51,32 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
           var estMin = (results.Wordcount / WPM);
           var avgEstHr = Math.floor(estMin / 60);
           var avgEstMin = Math.floor(estMin - (avgEstHr * 60));
+        	var dot, PagesC, WordcountC, Description = '';
           switch (results.Accuracy) { 
             case 'Verified':
-              var dot = 'dot dot-success';
+              dot = 'dot dot-success';
               break;
             case 'Estimate':
-              var dot = 'dot dot-warning';
+              dot = 'dot dot-warning';
               break;
             default:
-              var dot = 'dot dot-danger';
+              dot = 'dot dot-danger';
           }
           if (results.Pages > 0) {
-            var PagesC = results.Pages.toLocaleString();
+            PagesC = results.Pages.toLocaleString();
           } else {
-            var PagesC = 'Unknown page count';
+            PagesC = 'Unknown page count';
           }
           if (results.Wordcount > 0) {
-            var WordcountC = results.Wordcount.toLocaleString();
+            WordcountC = results.Wordcount.toLocaleString();
           } else {
-            var WordcountC = 'Unknown number of';
+            WordcountC = 'Unknown number of';
           }
           var fWordcountC = featured.Wordcount.toLocaleString();
-          if (results.Description != null) {
-            var Description = results.Description.replace(/<(?:.|\n)*?>/gm, '');
+          if (results.Description !== null) {
+            Description = results.Description.replace(/<(?:.|\n)*?>/gm, '');
           } else {
-            var Description = 'Sorry, no description found.';
+            Description = 'Sorry, no description found.';
           }
           res.render('books', {
             pageTitle: results.Title,
@@ -112,7 +113,7 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             adsSrc: config.responsiveAdSrc
           //});
         });
-      };
+      }
     });
   });
 });
