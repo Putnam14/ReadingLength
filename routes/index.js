@@ -25,7 +25,7 @@ router.post('/book-search', function(req, res, next) {
   var searchQuery = req.sanitize(req.body.query);
   bookSearch.search(searchQuery, function(results) {
     //res.send(results);
-    if (results === 0) {
+    if (results == 0) {
       res.status(404).redirect('/404');
     } else {
       res.redirect('/book/isbn-' + results + '/');
@@ -42,7 +42,7 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
   var ISBN = req.params['urlISBN'];
   bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
     bookSearch.getBook(ISBN.toUpperCase(), function(results) { //toUpperCase bc X at the end needs to be capitalized
-      if (results === null) {
+      if (results == null) {
         res.redirect('/404');
       } else {
         //res.status(200).send(results); //JSON
@@ -73,7 +73,7 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             WordcountC = 'Unknown number of';
           }
           var fWordcountC = featured.Wordcount.toLocaleString();
-          if (results.Description !== null) {
+          if (results.Description != null) {
             Description = results.Description.replace(/<(?:.|\n)*?>/gm, '');
           } else {
             Description = 'Sorry, no description found.';

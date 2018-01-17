@@ -100,19 +100,19 @@ function firstAmazonSearch(query, callback) {
                             mdObj.Image = response[0].Item[0].LargeImage[0].URL[0];
                         }
                         if (response[0].Item[0].hasOwnProperty('SimilarProducts')) {
-                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0] !== null) {
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0] != null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0].hasOwnProperty('ASIN')) {
                                     mdObj.Sim1ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].ASIN[0];
                                     mdObj.Sim1Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].Title[0];
                                 }
                             }
-                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1] !== null) {
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1] != null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1].hasOwnProperty('ASIN')) {
                                     mdObj.Sim2ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].ASIN[0];
                                     mdObj.Sim2Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].Title[0];
                                 }
                             }
-                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2] !== null) {
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2] != null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2].hasOwnProperty('ASIN')) {
                                     mdObj.Sim3ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].ASIN[0];
                                     mdObj.Sim3Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].Title[0];
@@ -217,7 +217,7 @@ function searchDBQuery(query, callback) { //
         db.collection("books").find({Query:query.toLowerCase()}).toArray(function(err, result) {
             if (err) throw err;
             var ISBN = 0;
-            if (result[0] !== undefined) {
+            if (result[0] != null) {
                 ISBN = result[0].ISBN;
             }
             db.close();
@@ -236,7 +236,7 @@ function searchDBISBN(ISBN, callback) {
                 console.log('Error searching for ISBN');
             }
             var data = 0;
-            if (result[0] !== undefined) {
+            if (result[0] != null) {
                 data = result[0];
             }
             db.close();
