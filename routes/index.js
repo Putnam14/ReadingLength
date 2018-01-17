@@ -26,19 +26,20 @@ router.post('/book-search', function(req, res, next) {
   bookSearch.search(searchQuery, function(results) {
     //res.send(results);
     if (results == 0) {
-      res.redirect('/404');
+      res.status(404).redirect('/404');
     } else {
       res.redirect('/book/isbn-' + results + '/');
     };
   });
 });
 
+router.get('/book/isbn-404', function(req, res, next) { //Bad design decisions
+  res.status(404).redirect('/404');
+})
+
 /* GET books page (\\d{9}[\\d|X]$)*/
 router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
   var ISBN = req.params['urlISBN'];
-  if (ISBN == '404') {
-    res.redirect('/404');
-  }
   bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
     bookSearch.getBook(ISBN.toUpperCase(), function(results) { //toUpperCase bc X at the end needs to be capitalized
       if (results == null) {
