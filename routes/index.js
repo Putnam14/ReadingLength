@@ -7,7 +7,7 @@ const bookSearch = require('../bookSearch');
 router.get('/', function(req, res, next) {
   bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
     res.render('index', { 
-      pageTitle: 'Look up how long it will take to read any book in the world',
+      pageTitle: 'Book length search engine',
       title: 'Reading Length',
       description: 'Find out how long it will take you to read any book based on the book\'s wordcount and your reading speed (WPM) using our simple search engine.',
       ref: config.amazonAPI.associatesTag,
