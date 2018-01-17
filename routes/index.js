@@ -213,7 +213,7 @@ router.get('/404', function(req, res, next) {
   });
 });
 
-router.get('*', function(req, res, next) {
+router.all('*', function(req, res, next) {
   res.status(404).redirect('/404');
 });
 
