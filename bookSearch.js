@@ -98,7 +98,6 @@ function firstAmazonSearch(query, callback) {
                             mdObj.Description = response[0].Item[0].EditorialReviews[0].EditorialReview[0].Content[0];
                         }
                         mdObj.Image = response[0].Item[0].LargeImage[0].URL[0];
-                        console.log('Searching for similar');
                         if (response[0].Item[0].hasOwnProperty('SimilarProducts')) {
                             if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0] != null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0].hasOwnProperty('ASIN')) {
