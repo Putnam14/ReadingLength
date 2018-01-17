@@ -24,8 +24,8 @@ block content
             a(href="http://www.amazon.com/dp/#{ISBN}?tag=#{ref}", style="color: inherit")
               .row.text-center
                 .col-sm-12
-                  p MSRP: #{MSRP} 
-                  p Current price: #{Price} (Amazon)
+                  -//p MSRP: #{MSRP} 
+                  -//p Current price: #{Price} (Amazon)
                   img.img-responsive.center-block(src="/img/shopnow.png", alt="Shop for #{Title} at Amazon")
       .col-sm-6
         .panel.panel-default
@@ -42,7 +42,7 @@ block content
               span.input-group-btn
                 button.btn.btn-default#calculate(onclick="calculate();") Estimate!
               -//input.form-control#pagesRead(name="pagesRead", type="number", min="0", max="#{Pages}", placeholder="How many pages have you read?")
-              //button.btn.btn-default#calculate(style="margin:auto", onclick="calculate();") Estimate!
+              -//button.btn.btn-default#calculate(style="margin:auto", onclick="calculate();") Estimate!
           .panel-footer
             p Find #[a(href="/wpm/", target="_blank") your reading speed by taking one of these tests] or by reading this book's description, below.
       .col-sm-12

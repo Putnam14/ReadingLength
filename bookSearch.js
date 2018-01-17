@@ -94,17 +94,23 @@ function firstAmazonSearch(query, callback) {
                         mdObj.Image = response[0].Item[0].LargeImage[0].URL[0];
                         console.log('Searching for similar');
                         if (response[0].Item[0].hasOwnProperty('SimilarProducts')) {
-                            if (typeof response[0].Item[0].SimilarProducts[0].SimilarProduct[0] != undefined) {
-                                mdObj.Sim1ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].ASIN[0];
-                                mdObj.Sim1Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].Title[0];
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0] != null) {
+                                if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0].hasOwnProperty('ASIN')) {
+                                    mdObj.Sim1ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].ASIN[0];
+                                    mdObj.Sim1Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[0].Title[0];
+                                }
                             }
-                            if (typeof response[0].Item[0].SimilarProducts[0].SimilarProduct[1] != undefined) {
-                                mdObj.Sim2ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].ASIN[0];
-                                mdObj.Sim2Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].Title[0];
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1] != null) {
+                                if (response[0].Item[0].SimilarProducts[0].SimilarProduct[1].hasOwnProperty('ASIN')) {
+                                    mdObj.Sim2ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].ASIN[0];
+                                    mdObj.Sim2Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[1].Title[0];
+                                }
                             }
-                            if (typeof response[0].Item[0].SimilarProducts[0].SimilarProduct[2] != undefined) {
-                                mdObj.Sim3ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].ASIN[0];
-                                mdObj.Sim3Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].Title[0];
+                            if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2] != null) {
+                                if (response[0].Item[0].SimilarProducts[0].SimilarProduct[2].hasOwnProperty('ASIN')) {
+                                    mdObj.Sim3ISBN = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].ASIN[0];
+                                    mdObj.Sim3Title = response[0].Item[0].SimilarProducts[0].SimilarProduct[2].Title[0];
+                                }
                             }
                         };
                         mdObj.Wordcount = mdObj.Pages*config.wordsPerPage;
