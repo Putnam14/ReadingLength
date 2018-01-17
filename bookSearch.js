@@ -96,7 +96,9 @@ function firstAmazonSearch(query, callback) {
                         if (response[0].Item[0].hasOwnProperty('EditorialReviews')) {
                             mdObj.Description = response[0].Item[0].EditorialReviews[0].EditorialReview[0].Content[0];
                         }
-                        mdObj.Image = response[0].Item[0].LargeImage[0].URL[0];
+                        if (response[0].Item[0].hasOwnProperty('LargeImage')) {
+                            mdObj.Image = response[0].Item[0].LargeImage[0].URL[0];
+                        }
                         if (response[0].Item[0].hasOwnProperty('SimilarProducts')) {
                             if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0] != null) {
                                 if (response[0].Item[0].SimilarProducts[0].SimilarProduct[0].hasOwnProperty('ASIN')) {
