@@ -39,83 +39,87 @@ router.get('/book/isbn-404', function(req, res, next) { //Bad design decisions
 
 /* GET books page (\\d{9}[\\d|X]$)*/
 router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
-  var ISBN = req.params['urlISBN'];
-  bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
-    bookSearch.getBook(ISBN.toUpperCase(), function(results) { //toUpperCase bc X at the end needs to be capitalized
-      if (results == null) {
-        res.redirect('/404');
-      } else {
-        //res.status(200).send(results); //JSON
-        //bookSearch.getBookPrice(ISBN, function(price) {
-          var WPM = config.wordsPerMinuteReading;
-          var estMin = (results.Wordcount / WPM);
-          var avgEstHr = Math.floor(estMin / 60);
-          var avgEstMin = Math.floor(estMin - (avgEstHr * 60));
-        	var dot, PagesC, WordcountC, Description = '';
-          switch (results.Accuracy) { 
-            case 'Verified':
-              dot = 'dot dot-success';
-              break;
-            case 'Estimate':
-              dot = 'dot dot-warning';
-              break;
-            default:
-              dot = 'dot dot-danger';
-          }
-          if (results.Pages > 0) {
-            PagesC = results.Pages.toLocaleString();
-          } else {
-            PagesC = 'Unknown page count';
-          }
-          if (results.Wordcount > 0) {
-            WordcountC = results.Wordcount.toLocaleString();
-          } else {
-            WordcountC = 'Unknown number of';
-          }
-          var fWordcountC = featured.Wordcount.toLocaleString();
-          if (results.Description != null) {
-            Description = results.Description.replace(/<(?:.|\n)*?>/gm, '');
-          } else {
-            Description = 'Sorry, no description found.';
-          }
-          res.render('books', {
-            pageTitle: results.Title,
-            description: "The average reader will take " + avgEstHr + " hours, " + avgEstMin + " minutes to read " + results.Title + " at a speed of 250 WPM. Estimated " + results.Wordcount + " words in " + results.Pages + " pages. Find out how long it will take you to read it!",
-            avgEstHr: avgEstHr,
-            avgEstMin: avgEstMin,
-            WPM: WPM,
-            ref: config.amazonAPI.associatesTag,
-            ISBN: results.ISBN,
-            Title: results.Title,
-            Author: results.Author,
-            //MSRP: results.MSRP,
-            Pages: PagesC,
-            Wordcount: WordcountC,
-            Dot: dot,
-            Accuracy: results.Accuracy,
-            AccuracyDesc: results.AccuracyDesc,
-            ReleaseDate: results.ReleaseDate,
-            Sim1ISBN: results.Sim1ISBN, 
-            Sim1Title: results.Sim1Title,
-            Sim2ISBN: results.Sim2ISBN,
-            Sim2Title: results.Sim2Title,
-            Sim3ISBN: results.Sim3ISBN,
-            Sim3Title: results.Sim3Title,
-            Image: results.Image,
-            Description: Description,
-            //Price: price,
-            FeaturedMonth: config.featuredBook.month,
-            FeaturedTitle: featured.Title,
-            FeaturedImage: featured.Image,
-            FeaturedISBN: featured.ISBN,
-            FeaturedWordcount: fWordcountC,
-            adsDiv: config.responsiveAdId,
-            adsSrc: config.responsiveAdSrc
-          //});
-        });
-      }
+  var ISBN = req.params['urlISBN'].toUpperCase();
+  if (!(/\d{9}[\dxX]/.test(ISBN))) {
+    res.status(404).redirect('/404');
+  } else {
+    bookSearch.getBook(config.featuredBook.ISBN, function(featured) {
+      bookSearch.getBook(ISBN, function(results) { //toUpperCase bc X at the end needs to be capitalized
+        if (results == null || results.Title == null) {
+          res.redirect('/404');
+        } else {
+          //res.status(200).send(results); //JSON
+          //bookSearch.getBookPrice(ISBN, function(price) {
+            var WPM = config.wordsPerMinuteReading;
+            var estMin = (results.Wordcount / WPM);
+            var avgEstHr = Math.floor(estMin / 60);
+            var avgEstMin = Math.floor(estMin - (avgEstHr * 60));
+            var dot, PagesC, WordcountC, Description = '';
+            switch (results.Accuracy) { 
+              case 'Verified':
+                dot = 'dot dot-success';
+                break;
+              case 'Estimate':
+                dot = 'dot dot-warning';
+                break;
+              default:
+                dot = 'dot dot-danger';
+            }
+            if (results.Pages > 0) {
+              PagesC = results.Pages.toLocaleString();
+            } else {
+              PagesC = 'Unknown page count';
+            }
+            if (results.Wordcount > 0) {
+              WordcountC = results.Wordcount.toLocaleString();
+            } else {
+              WordcountC = 'Unknown number of';
+            }
+            var fWordcountC = featured.Wordcount.toLocaleString();
+            if (results.Description != null) {
+              Description = results.Description.replace(/<(?:.|\n)*?>/gm, '');
+            } else {
+              Description = 'Sorry, no description found.';
+            }
+            res.render('books', {
+              pageTitle: results.Title,
+              description: "The average reader will take " + avgEstHr + " hours, " + avgEstMin + " minutes to read " + results.Title + " at a speed of 250 WPM. Estimated " + results.Wordcount + " words in " + results.Pages + " pages. Find out how long it will take you to read it!",
+              avgEstHr: avgEstHr,
+              avgEstMin: avgEstMin,
+              WPM: WPM,
+              ref: config.amazonAPI.associatesTag,
+              ISBN: results.ISBN,
+              Title: results.Title,
+              Author: results.Author,
+              //MSRP: results.MSRP,
+              Pages: PagesC,
+              Wordcount: WordcountC,
+              Dot: dot,
+              Accuracy: results.Accuracy,
+              AccuracyDesc: results.AccuracyDesc,
+              ReleaseDate: results.ReleaseDate,
+              Sim1ISBN: results.Sim1ISBN, 
+              Sim1Title: results.Sim1Title,
+              Sim2ISBN: results.Sim2ISBN,
+              Sim2Title: results.Sim2Title,
+              Sim3ISBN: results.Sim3ISBN,
+              Sim3Title: results.Sim3Title,
+              Image: results.Image,
+              Description: Description,
+              //Price: price,
+              FeaturedMonth: config.featuredBook.month,
+              FeaturedTitle: featured.Title,
+              FeaturedImage: featured.Image,
+              FeaturedISBN: featured.ISBN,
+              FeaturedWordcount: fWordcountC,
+              adsDiv: config.responsiveAdId,
+              adsSrc: config.responsiveAdSrc
+            //});
+          });
+        }
+      });
     });
-  });
+  }
 });
 
 /* GET wpm page */
