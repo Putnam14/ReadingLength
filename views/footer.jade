@@ -45,5 +45,15 @@ script.
         window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
     else window.addEventListener('load', loadDeferredStyles);
+//- Amazon OneLink
 div(id="amzn-assoc-ad-ce5ce3ba-3366-4bec-a509-0fbccf17d9c4")
 script(async, src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=ce5ce3ba-3366-4bec-a509-0fbccf17d9c4")
+//- Amazon Mobile Pop
+script(type="text/javascript").
+    amzn_assoc_ad_type = "link_enhancement_widget";
+    amzn_assoc_tracking_id = "readleng-20";
+    amzn_assoc_linkid = "551c64bdfcf3a0ccfcd48c3fe3f80875";
+    amzn_assoc_placement = "";
+    amzn_assoc_marketplace = "amazon";
+    amzn_assoc_region = "US";
+script(src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace=US")
