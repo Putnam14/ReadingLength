@@ -83,7 +83,7 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
             }
             res.render('books', {
               pageTitle: results.Title,
-              description: "The average reader will take " + avgEstHr + " hours, " + avgEstMin + " minutes to read " + results.Title + " at a speed of 250 WPM. Estimated " + results.Wordcount + " words in " + results.Pages + " pages. Find out how long it will take you to read it!",
+              description: results.Title + " has " + PagesC + " pages. Reading Length provides a calculation for the word count of this book, find out how long it will take you to read!",
               avgEstHr: avgEstHr,
               avgEstMin: avgEstMin,
               WPM: WPM,
