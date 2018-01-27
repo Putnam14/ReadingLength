@@ -1,9 +1,10 @@
 .panel.panel-default.text-center
     .panel-heading
         p.panel-title Book of #{FeaturedMonth}
-    .panel-body
-        a(href="/book/isbn-#{FeaturedISBN}/", style="color: inherit")
+    a(href="/book/isbn-#{FeaturedISBN}/", style="color: inherit")
+        .panel-body
             img.img-thumbnail.img-responsive(src="#{FeaturedImage}", alt="#{FeaturedTitle}")
+        .panel-body
             p #{FeaturedTitle}
             p #{FeaturedWordcount} words
     .panel-footer
