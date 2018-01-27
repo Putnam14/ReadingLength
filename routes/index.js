@@ -48,8 +48,6 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
         if (results == null || results.Title == null) {
           res.redirect('/404');
         } else {
-          //res.status(200).send(results); //JSON
-          //bookSearch.getBookPrice(ISBN, function(price) {
             var WPM = config.wordsPerMinuteReading;
             var estMin = (results.Wordcount / WPM);
             var avgEstHr = Math.floor(estMin / 60);
@@ -91,7 +89,6 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
               ISBN: results.ISBN,
               Title: results.Title,
               Author: results.Author,
-              //MSRP: results.MSRP,
               Pages: PagesC,
               Wordcount: WordcountC,
               Dot: dot,
@@ -106,14 +103,11 @@ router.get('/book/isbn-:urlISBN/?', function(req, res, next) {
               Sim3Title: results.Sim3Title,
               Image: results.Image,
               Description: Description,
-              //Price: price,
               FeaturedMonth: config.featuredBook.month,
               FeaturedTitle: featured.Title,
               FeaturedImage: featured.Image,
               FeaturedISBN: featured.ISBN,
-              FeaturedWordcount: fWordcountC,
-              adsDiv: config.responsiveAdId,
-              adsSrc: config.responsiveAdSrc
+              FeaturedWordcount: fWordcountC
             //});
           });
         }
