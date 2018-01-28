@@ -30,15 +30,15 @@ block content
       .col-sm-7
         .panel.panel-default
           .panel-heading
-            p.panel-title.text-center How long will it take to read this?
+            p.panel-title.text-center #[strong How long will this take to read?]
           .panel-body
-            p The average reader will spend #{avgEstHr} hours and #{avgEstMin} minutes reading #{Title} at #{WPM} WPM (words per minute).
+            p The average reader will spend #[strong #{avgEstHr} hours] and #[strong #{avgEstMin} minutes] reading #{Title} at #{WPM} WPM (words per minute).
             hr
             .readtime.hidden#results
-              p This should take you around <ins id="estHr"></ins> hours and <ins id="estMin"></ins> minutes to read!
+              p This should take you around #[strong #[ins#estHr] hours] and #[strong #[ins#estMin] minutes] to read!
               p Read for <ins id="month"></ins> minutes each day and finish within a month!
               hr
-            p Find out how long it will take you to read by entering your reading speed.
+            p Find out how fast you can read this by entering your reading speed.
             .input-group
               input.form-control#WPM(name="WPM", type="number", min="1", placeholder="Enter WPM")
               span.input-group-btn
