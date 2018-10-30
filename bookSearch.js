@@ -32,27 +32,26 @@ const priceAmazonSearch = async ASIN => {
 }
 
 // Audible Length
-function audibleSearch(ASIN, callback) {
-  client.itemLookup(
-    {
+const audibleSearch = async ASIN => {
+  try {
+    const res = client.itemLookup({
       idType: 'ASIN',
       itemId: ASIN,
-    },
-    (err, results, response) => {
-      if (err) {
-        console.log('Error with audibleSearch')
-        callback(0)
-      } else {
-        // console.log(results[0].ItemAttributes);
-        if (results[0].ItemAttributes[0].hasOwnProperty('RunningTime')) {
-          // Older audio CDs may not have runtime listed (See Harry Potter)
-          callback(results[0].ItemAttributes[0].RunningTime[0]._)
-        } else {
-          callback(0)
-        }
-      }
+    })
+    if (
+      Object.prototype.hasOwnProperty.call(
+        res[0].ItemAttributes[0],
+        'RunningTime'
+      )
+    ) {
+      return res[0].ItemAttributes[0].RunningTime[0]._
     }
-  )
+    console.log('Audiobook had no runtime')
+    return 0
+  } catch (err) {
+    console.log('Error with audibleSearch')
+    return 0
+  }
 }
 
 // Amazon Product Advertising API
