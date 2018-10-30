@@ -1,10 +1,4 @@
 function calculate() {
-  /* var read = parseInt(document.getElementById('pagesread').value);
-    if (read > 0) {
-        var unread = (<?php echo $Pages; ?> - read);
-    } else {
-        var unread = <?php echo $Pages; ?>;
-    } */
   const wpm = parseInt(
     $('#WPM')
       .val()
