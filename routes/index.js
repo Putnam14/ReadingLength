@@ -29,9 +29,8 @@ router.post('/book-search', (req, res, next) => {
     // res.send(results);
     if (results === 0) {
       res.status(404).redirect('/404')
-    } else {
-      res.redirect(`/book/isbn-${results}/`)
     }
+    res.redirect(`/book/isbn-${results}/`)
   })
 })
 
@@ -40,19 +39,21 @@ router.get('/book/isbn-404', (req, res, next) => {
   res.status(404).redirect('/404')
 })
 
+// All of these pages needs to be broken out. This is just the router.
+
 /* GET books page (\\d{9}[\\d|X]$) */
 router.get('/book/isbn-:urlISBN/?', (req, res, next) => {
   const ISBN = req.params.urlISBN.toUpperCase()
   if (!/\d{9}[\dxX]/.test(ISBN)) {
     res.status(404).redirect('/404')
   }
+  // This needs to be broken out
   bookSearch.getBook(config.featuredBook.ISBN, featured => {
     bookSearch.getBook(ISBN, results => {
       // toUpperCase bc X at the end needs to be capitalized
       if (results == null || results.Title == null) {
         res.redirect('/404')
       }
-
       const WPM = config.wordsPerMinuteReading
       const estMin = results.Wordcount / WPM
       const avgEstHr = Math.floor(estMin / 60)
@@ -82,9 +83,8 @@ router.get('/book/isbn-:urlISBN/?', (req, res, next) => {
           dot = 'dot dot-danger'
       }
       const {
-        ISBN,
         Title,
-        Autho,
+        Author,
         Accuracy,
         AccuracyDesc,
         ReleaseDate,
@@ -105,29 +105,28 @@ router.get('/book/isbn-:urlISBN/?', (req, res, next) => {
         avgEstMin,
         WPM,
         ref: config.amazonAPI.associatesTag,
-        ISBN: results.ISBN,
-        Title: results.Title,
-        Author: results.Author,
+        ISBN,
+        Title,
+        Author,
         Pages: PagesC,
         Wordcount: WordcountC,
         Dot: dot,
-        Accuracy: results.Accuracy,
-        AccuracyDesc: results.AccuracyDesc,
-        ReleaseDate: results.ReleaseDate,
-        Sim1ISBN: results.Sim1ISBN,
-        Sim1Title: results.Sim1Title,
-        Sim2ISBN: results.Sim2ISBN,
-        Sim2Title: results.Sim2Title,
-        Sim3ISBN: results.Sim3ISBN,
-        Sim3Title: results.Sim3Title,
-        Image: results.Image,
+        Accuracy,
+        AccuracyDesc,
+        ReleaseDate,
+        Sim1ISBN,
+        Sim1Title,
+        Sim2ISBN,
+        Sim2Title,
+        Sim3ISBN,
+        Sim3Title,
+        Image,
         Description,
         FeaturedMonth: config.featuredBook.month,
         FeaturedTitle: featured.Title,
         FeaturedImage: featured.Image,
         FeaturedISBN: featured.ISBN,
         FeaturedWordcount: fWordcountC,
-        // });
       })
     })
   })
