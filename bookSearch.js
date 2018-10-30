@@ -54,6 +54,18 @@ const audibleSearch = async ASIN => {
   }
 }
 
+// Amazon allows logging data such as title, author, page numbers, and ISBN for extended periods of time, as per correspondance with a Bryan F on 6/5/15
+const insertDB = async obj => {
+  try {
+    const connect = await mongoClient.connect(url)
+    await connect.collection('books').insertOne(obj)
+    return obj
+  } catch (err) {
+    console.log('Insertion error')
+    return false
+  }
+}
+
 // Amazon Product Advertising API
 function firstAmazonSearch(query, callback) {
   const mdObj = {}
@@ -256,25 +268,6 @@ function searchGoogle(query, callback) {
         };
     });
 } */
-
-// Amazon allows logging data such as title, author, page numbers, and ISBN for extended periods of time, as per correspondance with a Bryan F on 6/5/15
-function insertDB(object, callback) {
-  mongoClient.connect(
-    url,
-    (err, db) => {
-      if (err) {
-        console.log('Error connecting on insertion')
-      }
-      db.collection('books').insertOne(object, (err, res) => {
-        if (err) {
-          console.log('Insertion error')
-        }
-        db.close()
-        callback(true)
-      })
-    }
-  )
-}
 
 function searchDBQuery(query, callback) {
   //
