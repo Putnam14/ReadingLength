@@ -1,45 +1,61 @@
 function calculate() {
-    /*var read = parseInt(document.getElementById('pagesread').value);
+  /* var read = parseInt(document.getElementById('pagesread').value);
     if (read > 0) {
         var unread = (<?php echo $Pages; ?> - read);
     } else {
         var unread = <?php echo $Pages; ?>;
-    }*/
-    var wpm = parseInt($("#WPM").val().replace(/,/g, ''), 10);
-    var words = parseInt($("#Wordcount").html().replace(/,/g, ''), 10);
-    var mins = words / wpm;
-    var esthr = Math.floor(mins / 60);
-    var estmin = Math.floor(mins - esthr * 60);
-    var month = Math.floor(mins / 30);
+    } */
+  const wpm = parseInt(
+    $('#WPM')
+      .val()
+      .replace(/,/g, ''),
+    10
+  )
+  const words = parseInt(
+    $('#Wordcount')
+      .html()
+      .replace(/,/g, ''),
+    10
+  )
+  const mins = words / wpm
+  const esthr = Math.floor(mins / 60)
+  const estmin = Math.floor(mins - esthr * 60)
+  const month = Math.floor(mins / 30)
 
-    $("#estHr").html(esthr);
-    $("#estMin").html(estmin);
-    $("#month").html(month);
-    $("#results").removeClass("hidden");
+  $('#estHr').html(esthr)
+  $('#estMin').html(estmin)
+  $('#month').html(month)
+  $('#results').removeClass('hidden')
 }
 
 function readtime() {
-    var b, t0 = '';
-    if (($("#timing").html() == "Start reading") || ($("#timing").html() == "Test again")){
-      b = new Date();
-      T0 = b.getTime();
-      $("#timing").html("Timing...");
-     } 
-     else if ($("#timing").html() == "Timing..."){
-      $("#timing").html("Test again");
-      var a = new Date();
-      var T1 = a.getTime();
-      var elapsed = (T1 - T0);
-      var minutes = (elapsed / 60000);
-      var description = $("#description").html();
-      description = description.replace(/<[^>]*>/g," ");
-      description = description.replace(/\s+/g," ");
-      description = description.trim();
-      var words = description.split(" ").length;
-      var WPM = Math.round(words/minutes);
-      $("#WPMResult").html(WPM);
-      $("#CalcWPM").removeClass('hidden');
-      $("#WPM").val(WPM);
-      calculate();
-     }
+  let b
+  let T0 = ''
+  if (
+    $('#timing').html() === 'Start reading' ||
+    $('#timing').html() === 'Test again'
+  ) {
+    b = new Date()
+    T0 = b.getTime()
+    $('#timing').html('Timing...')
+  } else if ($('#timing').html() === 'Timing...') {
+    $('#timing').html('Test again')
+    const a = new Date()
+    const T1 = a.getTime()
+    const elapsed = T1 - T0
+    const minutes = elapsed / 60000
+    let description = $('#description').html()
+    description = description.replace(/<[^>]*>/g, ' ')
+    description = description.replace(/\s+/g, ' ')
+    description = description.trim()
+    const words = description.split(' ').length
+    const WPM = Math.round(words / minutes)
+    $('#WPMResult').html(WPM)
+    $('#CalcWPM').removeClass('hidden')
+    $('#WPM').val(WPM)
+    calculate()
   }
+}
+
+export { readtime }
+export { calculate }
