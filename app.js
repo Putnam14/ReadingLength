@@ -3,7 +3,6 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const expressSanitizer = require('express-sanitizer')
 const bodyParser = require('body-parser')
-
 const index = require('./routes/index')
 
 const app = express()
