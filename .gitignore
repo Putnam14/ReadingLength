@@ -4,3 +4,27 @@ views/ad.html
 views/ad.html
 views/aboveDescAd.html
 views/ad.html
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+node_modules/*
+
+# eslint cache
+.eslintcache
+
+# dotenv environment variables
+*.env
+
+# nextjs build stuff
+.next/
+.build/
+
+
+.DS_Store
+haters/
+layout.md
