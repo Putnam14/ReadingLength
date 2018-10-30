@@ -12,25 +12,23 @@ const client = amazon.createClient({
 const url = config.database.host
 
 // Get details on each page load (Price, description, image, etc.)
-function priceAmazonSearch(ASIN) {
-  client
-    .itemSearch({
+const priceAmazonSearch = async ASIN => {
+  try {
+    const res = await client.itemSearch({
       keywords: ASIN,
       searchIndex: 'Books',
       responseGroup: 'Offers',
     })
-    .then(res => {
-      if (results[0].hasOwnProperty('Offers')) {
-        return results[0].Offers[0].Offer[0].OfferListing[0].Price[0]
-          .FormattedPrice[0]
-      }
-      console.log('No price')
-      return 'Unknown'
-    })
-    .catch(err => {
-      console.log('Error with priceAmazonSearch')
-      return 'Unknown'
-    })
+    if (Object.prototype.hasOwnProperty.call(res[0], 'Offers')) {
+      return res[0].Offers[0].Offer[0].OfferListing[0].Price[0]
+        .FormattedPrice[0]
+    }
+    console.log('No price')
+    return 'Unknown'
+  } catch (err) {
+    console.log('Error with priceAmazonSearch')
+    return 'Unknown'
+  }
 }
 
 // Audible Length
