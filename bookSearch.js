@@ -57,11 +57,28 @@ const audibleSearch = async ASIN => {
 // Amazon allows logging data such as title, author, page numbers, and ISBN for extended periods of time, as per correspondance with a Bryan F on 6/5/15
 const insertDB = async obj => {
   try {
-    const connect = await mongoClient.connect(url)
-    await connect.collection('books').insertOne(obj)
-    return obj
+    const db = await mongoClient.connect(url)
+    await db.collection('books').insertOne(obj)
+    db.close()
+    return true
   } catch (err) {
-    console.log('Insertion error')
+    console.log(`Insertion error ${err}`)
+    return false
+  }
+}
+
+// See if we can match up the query with an ISBN
+const searchDBQuery = async query => {
+  if (query === null) return 404
+  try {
+    const db = await mongoClient.connect(url)
+    const ISBN = await db
+      .collection('books')
+      .find({ Query: query.toLowerCase() })
+      .toArray(res => (res[0] !== null ? res[0].ISBN : ''))
+    return ISBN
+  } catch (err) {
+    console.log(`Error connecting on first query: ${err}`)
     return false
   }
 }
@@ -268,33 +285,6 @@ function searchGoogle(query, callback) {
         };
     });
 } */
-
-function searchDBQuery(query, callback) {
-  //
-  mongoClient.connect(
-    url,
-    (err, db) => {
-      if (err) {
-        console.log('Error connecting on first query')
-      }
-      if (query == null) {
-        callback(404)
-      } else {
-        db.collection('books')
-          .find({ Query: query.toLowerCase() })
-          .toArray((err, result) => {
-            if (err) throw err
-            let ISBN = 0
-            if (result[0] != null) {
-              ISBN = result[0].ISBN
-            }
-            db.close()
-            callback(ISBN)
-          })
-      }
-    }
-  )
-}
 
 function searchDBISBN(ISBN, callback) {
   mongoClient.connect(
