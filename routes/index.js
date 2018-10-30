@@ -45,87 +45,92 @@ router.get('/book/isbn-:urlISBN/?', (req, res, next) => {
   const ISBN = req.params.urlISBN.toUpperCase()
   if (!/\d{9}[\dxX]/.test(ISBN)) {
     res.status(404).redirect('/404')
-  } else {
-    bookSearch.getBook(config.featuredBook.ISBN, featured => {
-      bookSearch.getBook(ISBN, results => {
-        // toUpperCase bc X at the end needs to be capitalized
-        if (results == null || results.Title == null) {
-          res.redirect('/404')
-        } else {
-          const WPM = config.wordsPerMinuteReading
-          const estMin = results.Wordcount / WPM
-          const avgEstHr = Math.floor(estMin / 60)
-          const avgEstMin = Math.floor(estMin - avgEstHr * 60)
-          let dot
+  }
+  bookSearch.getBook(config.featuredBook.ISBN, featured => {
+    bookSearch.getBook(ISBN, results => {
+      // toUpperCase bc X at the end needs to be capitalized
+      if (results == null || results.Title == null) {
+        res.redirect('/404')
+      }
 
-          let PagesC
-
-          let WordcountC
-
-          let Description = ''
-          switch (results.Accuracy) {
-            case 'Verified':
-              dot = 'dot dot-success'
-              break
-            case 'Estimate':
-              dot = 'dot dot-warning'
-              break
-            default:
-              dot = 'dot dot-danger'
-          }
-          if (results.Pages > 0) {
-            PagesC = results.Pages.toLocaleString()
-          } else {
-            PagesC = 'Unknown page count'
-          }
-          if (results.Wordcount > 0) {
-            WordcountC = results.Wordcount.toLocaleString()
-          } else {
-            WordcountC = 'Unknown number of'
-          }
-          const fWordcountC = featured.Wordcount.toLocaleString()
-          if (results.Description != null) {
-            Description = results.Description.replace(/<(?:.|\n)*?>/gm, '')
-          } else {
-            Description = 'Sorry, no description found.'
-          }
-          res.render('books', {
-            pageTitle: results.Title,
-            description: `${
-              results.Title
-            } has ${PagesC} pages. Reading Length provides a calculation for the word count of this book, find out how long it will take you to read!`,
-            avgEstHr,
-            avgEstMin,
-            WPM,
-            ref: config.amazonAPI.associatesTag,
-            ISBN: results.ISBN,
-            Title: results.Title,
-            Author: results.Author,
-            Pages: PagesC,
-            Wordcount: WordcountC,
-            Dot: dot,
-            Accuracy: results.Accuracy,
-            AccuracyDesc: results.AccuracyDesc,
-            ReleaseDate: results.ReleaseDate,
-            Sim1ISBN: results.Sim1ISBN,
-            Sim1Title: results.Sim1Title,
-            Sim2ISBN: results.Sim2ISBN,
-            Sim2Title: results.Sim2Title,
-            Sim3ISBN: results.Sim3ISBN,
-            Sim3Title: results.Sim3Title,
-            Image: results.Image,
-            Description,
-            FeaturedMonth: config.featuredBook.month,
-            FeaturedTitle: featured.Title,
-            FeaturedImage: featured.Image,
-            FeaturedISBN: featured.ISBN,
-            FeaturedWordcount: fWordcountC,
-            // });
-          })
-        }
+      const WPM = config.wordsPerMinuteReading
+      const estMin = results.Wordcount / WPM
+      const avgEstHr = Math.floor(estMin / 60)
+      const avgEstMin = Math.floor(estMin - avgEstHr * 60)
+      const fWordcountC = featured.Wordcount.toLocaleString()
+      const PagesC =
+        results.Pages > 0
+          ? results.Pages.toLocaleString()
+          : 'Unknown page count'
+      const WordcountC =
+        results.Wordcount > 0
+          ? results.Wordcount.toLocaleString()
+          : 'Unknown number of'
+      const Description =
+        results.Description != null
+          ? results.Description.replace(/<(?:.|\n)*?>/gm, '')
+          : 'Sorry, no description found.'
+      let dot = ''
+      switch (results.Accuracy) {
+        case 'Verified':
+          dot = 'dot dot-success'
+          break
+        case 'Estimate':
+          dot = 'dot dot-warning'
+          break
+        default:
+          dot = 'dot dot-danger'
+      }
+      const {
+        ISBN,
+        Title,
+        Autho,
+        Accuracy,
+        AccuracyDesc,
+        ReleaseDate,
+        Sim1ISBN,
+        Sim1Title,
+        Sim2ISBN,
+        Sim2Title,
+        Sim3ISBN,
+        Sim3Title,
+        Image,
+      } = results
+      res.render('books', {
+        pageTitle: results.Title,
+        description: `${
+          results.Title
+        } has ${PagesC} pages. Reading Length provides a calculation for the word count of this book, find out how long it will take you to read!`,
+        avgEstHr,
+        avgEstMin,
+        WPM,
+        ref: config.amazonAPI.associatesTag,
+        ISBN: results.ISBN,
+        Title: results.Title,
+        Author: results.Author,
+        Pages: PagesC,
+        Wordcount: WordcountC,
+        Dot: dot,
+        Accuracy: results.Accuracy,
+        AccuracyDesc: results.AccuracyDesc,
+        ReleaseDate: results.ReleaseDate,
+        Sim1ISBN: results.Sim1ISBN,
+        Sim1Title: results.Sim1Title,
+        Sim2ISBN: results.Sim2ISBN,
+        Sim2Title: results.Sim2Title,
+        Sim3ISBN: results.Sim3ISBN,
+        Sim3Title: results.Sim3Title,
+        Image: results.Image,
+        Description,
+        FeaturedMonth: config.featuredBook.month,
+        FeaturedTitle: featured.Title,
+        FeaturedImage: featured.Image,
+        FeaturedISBN: featured.ISBN,
+        FeaturedWordcount: fWordcountC,
+        // });
       })
     })
-  }
+  })
 })
 
 /* GET wpm page */
