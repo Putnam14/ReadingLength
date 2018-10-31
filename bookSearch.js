@@ -75,10 +75,27 @@ const searchDBQuery = async query => {
     const ISBN = await db
       .collection('books')
       .find({ Query: query.toLowerCase() })
-      .toArray(res => (res[0] !== null ? res[0].ISBN : ''))
+      .toArray(result => (result[0] !== null ? result[0].ISBN : ''))
+    db.close()
     return ISBN
   } catch (err) {
-    console.log(`Error connecting on first query: ${err}`)
+    console.log(`Error connecting on first query (${query}): ${err}`)
+    return false
+  }
+}
+
+const searchDBISBN = async ISBN => {
+  if (ISBN === null) return 404
+  try {
+    const db = await mongoClient.connect(url)
+    const bookObj = await db
+      .collection('books')
+      .find({ ISBN })
+      .toArray(result => result[0])
+    db.close()
+    return bookObj
+  } catch (err) {
+    console.log(`Error connecting on ISBN search (${ISBN}): ${err}`)
     return false
   }
 }
@@ -285,30 +302,6 @@ function searchGoogle(query, callback) {
         };
     });
 } */
-
-function searchDBISBN(ISBN, callback) {
-  mongoClient.connect(
-    url,
-    (err, db) => {
-      if (err) {
-        console.log('Error connecting on ISBN search')
-      }
-      db.collection('books')
-        .find({ ISBN })
-        .toArray((err, result) => {
-          if (err) {
-            console.log('Error searching for ISBN')
-          }
-          let data = 0
-          if (result[0] != null) {
-            data = result[0]
-          }
-          db.close()
-          callback(data)
-        })
-    }
-  )
-}
 
 module.exports = {
   search(query, callback) {
